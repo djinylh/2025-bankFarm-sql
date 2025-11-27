@@ -155,8 +155,8 @@ CREATE TABLE loan_overdue(
 	,loan_id BIGINT NOT NULL COMMENT '대출 ID'
 	,loan_od_due_sts VARCHAR(10) NOT NULL COMMENT '납부 완료 여부'
 	,loan_od_amt BIGINT NOT NULL COMMENT '연체 금액'
-	,loan_od_start_dt DATE NOT NULL COMMENT '연체 시작일'
-	,loan_od_end_dt DATE COMMENT '최종 납부일'
+	,loan_od_st_dt DATE NOT NULL COMMENT '연체 시작일'
+	,loan_od_ed_dt DATE COMMENT '최종 납부일'
 	,loan_od_intrst DECIMAL(6,4) NOT NULL COMMENT'연체 이자'
 	,loan_od_fn_amt BIGINT NOT NULL COMMENT '총 납입 금액'
 	,loan_od_month INT NOT NULL COMMENT '연체 월'
@@ -242,3 +242,8 @@ DROP TABLE loan_repayment;
 DROP TABLE loan_overdue;
 
 DROP TABLE overdue_history;
+
+--                                      							  수정 테이블
+ALTER TABLE prod_rate
+ADD CONSTRAINT uq_prod_combo
+UNIQUE (prod_tp, prod_id, prod_rt_id);

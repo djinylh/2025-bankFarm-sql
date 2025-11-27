@@ -10,10 +10,12 @@ TRUNCATE TABLE prod_document;
 TRUNCATE TABLE transaction;
 TRUNCATE TABLE check_card;
 TRUNCATE TABLE loan_product;
+TRUNCATE TABLE loan_overdue;
 
 -- PK 1부터 초기화
 ALTER TABLE account AUTO_INCREMENT = 1;
 ALTER TABLE depo_contract AUTO_INCREMENT = 1;
 ALTER TABLE transaction AUTO_INCREMENT = 1;
 ALTER TABLE transaction AUTO_INCREMENT =1;
+
 

@@ -1,4 +1,4 @@
-/*											대출 테이블													*/
+/*																									대출 테이블													*/
 
 
 -- 2025-11-27 미만 대출 상환 스케줄 확인
@@ -72,3 +72,22 @@ FROM loan_application la
 JOIN loan l
 ON la.loan_app_id = l.loan_app_id
 WHERE l.loan_id = 10000;
+
+-- 연체를 위해 랜덤값 바꾸기
+UPDATE loan_repayment
+SET loan_due_sts = 'TX007'
+WHERE loan_due_sts = 'TX004'
+AND RAND() < 0.001;
+
+-- 연체값 되돌리기
+UPDATE loan_repayment
+SET loan_due_sts = 'TX004'
+WHERE loan_due_sts = 'TX007';
+
+-- 대출 상환금 10원단위 반올림 처리
+UPDATE loan_repayment
+SET loan_rpmt_due = ROUND(loan_rpmt_due / 10) * 10;
+
+-- 
+
+
