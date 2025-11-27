@@ -57,12 +57,18 @@ FROM loan_application la
 LEFT JOIN loan l ON la.loan_app_id = l.loan_app_id
 WHERE la.loan_app_sts_cd = 'AP002'
   AND l.loan_id IS NULL;
+  
+  
+-- 확인
+SELECT *
+FROM loan_application la
+LEFT JOIN loan l ON la.loan_app_id = l.loan_app_id
+WHERE la.loan_app_sts_cd = 'AP002'
+  AND l.loan_id IS NULL;
 
--- 아무거나 확인
+-- loan에서  확인
 SELECT *
 FROM loan_application la
 JOIN loan l
 ON la.loan_app_id = l.loan_app_id
 WHERE l.loan_id = 10000;
-  
-  
