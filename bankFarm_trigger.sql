@@ -1,10 +1,10 @@
 -- 이것만 예시로 적어두겠음!
 
-DROP TRIGGER IF EXISTS tg_INSERT_입출금
+DROP TRIGGER IF EXISTS trg_insert_transaction
 
 DELIMITER $$
 
-CREATE TRIGGER tg_INSERT_입출금
+CREATE TRIGGER trg_insert_transaction
 BEFORE INSERT ON `transaction`
 FOR EACH ROW
 BEGIN
