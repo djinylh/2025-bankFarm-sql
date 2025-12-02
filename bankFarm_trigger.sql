@@ -8,6 +8,11 @@ FOR EACH ROW
 BEGIN
 
 DECLARE amount INT; -- 계좌 잔액 변수 설정
+DECLARE fee INT; -- 수수료
+
+SELECT trns_fee INTO fee
+FROM trns_fee
+WHERE trns_fee_id = NEW.trns_fee_id;
 
 SELECT acct_bal INTO amount -- acct_bal 의 보유 잔액을 amount에 넣겠다
 FROM `account`
@@ -21,11 +26,11 @@ SIGNAL SQLSTATE '45000' -- 보통 강제 오류발생은 45000을 날린다고 �
 SET MESSAGE_TEXT = '잔액이 부족합니다';
 END IF;
 /*	다른 IF문 끝 */
-SET NEW.trns_bal = amount + NEW.trns_amt; -- 출금 반영
+SET NEW.trns_bal = amount + NEW.trns_amt - fee; -- 출금 반영
 
 /* 출금이 아니라면 .... */
 ELSE -- 여기에서 위의 큰 IF문을 끝내는 END IF; 와 같은 효력을 가짐
-SET NEW.trns_bal = amount + NEW.trns_amt; -- 입금 반영
+SET NEW.trns_bal = amount + NEW.trns_amt - fee; -- 입금 반영
 END IF;
 
 UPDATE `account` -- 원래 계좌의 보유 잔액으로 업데이트하기
@@ -105,3 +110,8 @@ VALUE (
 END $$
 
 DELIMITER ;
+
+/*																									계좌 트리거													*/
+
+
+
