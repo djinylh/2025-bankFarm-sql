@@ -255,3 +255,6 @@ UNIQUE (doc_prod_tp, doc_prod_id);
 
 ALTER TABLE cust_business_corporation
 MODIFY COLUMN cust_business_yn CHAR(1) DEFAULT 'N';
+
+ALTER TABLE customer
+MODIFY COLUMN cust_id BIGINT AUTO_INCREMENT COMMENT '고객 ID';
