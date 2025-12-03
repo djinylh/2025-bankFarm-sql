@@ -74,10 +74,15 @@ BEGIN
 	
 	INSERT INTO customer
 	(cust_nm, cust_phone, cust_email ,  cust_birth, cust_crd_point, cust_ssn, cust_cd, cust_tp, cust_marketing_yn)
-	VALUE
+	VALUES
 	(p_cust_nm, p_cust_phone, p_cust_email, p_cust_birth, p_cust_crd_point, p_cust_ssn, p_cust_cd, p_cust_tp, p_cust_marketing_yn);
 	
 	 SET new_cust_id = LAST_INSERT_ID(); -- 위의 customer의 PK 생성시 여기에 담아줌
+	 
+	 IF new_cust_id IS NULL THEN
+    SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = '고객 생성 실패: cust_id를 가져올 수 없습니다.';
+	 END IF;
 	 
 	 IF p_cust_tp <> 'CU011' -- 일반 고객이 아니라면
 	 THEN
@@ -88,11 +93,11 @@ BEGIN
 	 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = '사업자번호, 회사이름, 팩스번호는 필수로 입력해야 합니다.';
 	 		
-	 ELSE
-	 	INSERT INTO cust_business_corporation
-	 	(cust_business_number, cust_id, cust_company_name, cust_fax)
-	 	VALUE
-	 	(p_cust_business_number,new_cust_id, p_cust_company_name, p_cust_fax);
+	 	ELSE
+	 		INSERT INTO cust_business_corporation
+	 		(cust_business_number, cust_id, cust_company_name, cust_fax)
+	 		VALUE
+	 		(p_cust_business_number,new_cust_id, p_cust_company_name, p_cust_fax);
 	 	END IF;
 	 		
 	 END IF;		
